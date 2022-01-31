@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-sudo pacman -S cmake
+sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb
+yay -S --needed qt5 qtutilities
 
 ###
 # Icons
@@ -15,23 +16,22 @@ cmake ..
 sudo make install
 
 ###
-# Updator
+# Updator (Not working)
 ###
-[ -d $HOME/cutefish/updator ] && rm -rf $HOME/cutefish/updator
-git clone git@github.com:cutefishos/updator.git $HOME/cutefish/updator
-cd $HOME/cutefish/updator
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+# [ -d $HOME/cutefish/updator ] && rm -rf $HOME/cutefish/updator
+# git clone git@github.com:cutefishos/updator.git $HOME/cutefish/updator
+# cd $HOME/cutefish/updator
+# mkdir build
+# cd build
+# cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+# make
+# sudo make install
 
 ###
 # Launcher
 ###
 [ -d $HOME/cutefish/launcher ] && rm -rf $HOME/cutefish/launcher
-git@github.com:cutefishos/launcher.git $HOME/cutefish/launcher
-sudo pacman -S gcc cmake qt5-base qt5-quickcontrols2 kwindowsystem
+git clone git@github.com:cutefishos/launcher.git $HOME/cutefish/launcher
 cd $HOME/cutefish/launcher
 mkdir build
 cd build
@@ -68,7 +68,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/settings ] && rm -rf $HOME/cutefish/settings
 git clone git@github.com:cutefishos/settings.git $HOME/cutefish/settings
-sudo pacman -S extra-cmake-modules qt5-base qt5-quickcontrols2 freetype2 fontconfig networkmanager-qt modemmanager-qt
 cd $HOME/cutefish/settings
 mkdir build
 cd build
@@ -93,7 +92,6 @@ sudo make install
 ### 
 [ -d $HOME/cutefish/filemanager ] && rm -rf $HOME/cutefish/filemanager
 git clone git@github.com:cutefishos/filemanager.git $HOME/cutefish/filemanager
-sudo pacman -S extra-cmake-modules qt5-base qt5-quickcontrols2 taglib kio
 cd $HOME/cutefish/filemanager
 mkdir build
 cd build
@@ -106,7 +104,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/screenshot ] && rm -rf $HOME/cutefish/screenshot
 git clone git@github.com:cutefishos/screenshot.git $HOME/cutefish/screenshot
-sudo pacman -S extra-cmake-modules qt5-base qt5-quickcontrols2
 cd $HOME/cutefish/screenshot
 mkdir build
 cd build
@@ -119,7 +116,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/kwin-plugins ] && rm -rf $HOME/cutefish/kwin-plugins
 git clone git@github.com:cutefishos/kwin-plugins.git $HOME/cutefish/kwin-plugins
-sudo pacman -S extra-cmake-modules qt5-base qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwindowsystem kwayland kwin
 cd $HOME/cutefish/kwin-plugins
 mkdir build
 cd build
@@ -132,7 +128,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/dock ] && rm -rf $HOME/cutefish/dock
 git clone git@github.com:cutefishos/dock.git $HOME/cutefish/dock
-sudo pacman -S gcc cmake qt5-base qt5-quickcontrols2 kwindowsystem
 cd $HOME/cutefish/dock
 mkdir build
 cd build
@@ -145,8 +140,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/core ] && rm -rf $HOME/cutefish/core
 git clone git@github.com:cutefishos/core.git
-sudo pacman -S extra-cmake-modules pkgconf qt5-base qt5-quickcontrols2 qt5-x11extras qt5-tools\
-    kwindowsystem polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics
 cd $HOME/cutefish/core
 mkdir build
 cd build
@@ -219,7 +212,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/qt-plugins ] && rm -rf $HOME/cutefish/qt-plugins
 git clone git@github.com:cutefishos/qt-plugins.git $HOME/cutefish/qt-plugins
-sudo pacman -S gcc extra-cmake-modules qt5-base qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb
 cd $HOME/cutefish/qt-plugins
 mkdir build
 cd build
@@ -244,7 +236,6 @@ sudo make install
 ###
 [ -d $HOME/cutefish/libcutefish ] && rm -rf $HOME/cutefish/libcutefish
 git clone git@github.com:cutefishos/libcutefish.git $HOME/cutefish/libcutefish
-sudo pacman -S gcc cmake qt5-base qt5-quickcontrols2 networkmanager-qt modemmanager-qt
 cd $HOME/cutefish/libcutefish
 mkdir build
 cd build
