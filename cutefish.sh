@@ -1,12 +1,16 @@
 #!/bin/bash
 set -e
 
-sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb
-yay -S --needed qt5 qtutilities
+# sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb
+# yay -S --norebuild qt5 qtutilities libnm-git gio-sharp dbus glib
 
 build_dir() {
-    echo "Building $1"
-    mkdir build
+    echo
+    echo "Building $1 ..."
+    echo
+    if [ ! -d "build" ]; then
+        mkdir build
+    fi
     cd build
 }
 
@@ -15,19 +19,24 @@ clone() {
     GIT_URL=git@github.com:cutefishos/$1.git
 
     if [ ! -d $FOLDER ]; then
-        echo "Cloning $1 in $FOLDER"
+        echo
+        echo "Cloning $1 in $FOLDER ..."
+        echo
         git clone $GIT_URL $FOLDER
         cd $FOLDER
         build_dir $1
     elif [[ -d $FOLDER && ! -d $FOLDER/.git ]]; then
-        echo "Removing $FOLDER"
+        echo
+        echo "Removing $FOLDER ..."
         rm -rf $FOLDER
-        echo "Cloning $1 in $FOLDER"
+        echo "Cloning $1 in $FOLDER ..."
+        echo
         git clone $GIT_URL $FOLDER
         cd $FOLDER
         build_dir $1
     else
         cd $FOLDER
+        build_dir $1
     fi
 }
 
