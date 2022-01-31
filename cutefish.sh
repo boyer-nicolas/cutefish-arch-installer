@@ -1,8 +1,16 @@
 #!/bin/bash
 set -e
 
-# sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb networkmanager
-# yay -S --norebuild qt5 qtutilities libnm-git gio-sharp dbus glib libnma-git
+if [ $1 == "--build" ]; then
+    echo
+    echo "Getting dependencies with Pacman ..."
+    echo
+    sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb networkmanager
+    echo
+    echo "Getting dependencies with YAY ..."
+    echo
+    yay -S --norebuild qt5 qtutilities libnm-git gio-sharp dbus glib libnma-git dbus-cpp
+fi
 
 build_dir() {
     echo
