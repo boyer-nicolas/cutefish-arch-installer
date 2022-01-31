@@ -4,283 +4,197 @@ set -e
 sudo pacman -S --needed cmake yay gcc qt5-base qt5-quickcontrols2 kwindowsystem extra-cmake-modules qt5-base freetype2 fontconfig networkmanager-qt modemmanager-qt taglib kio qt5-declarative kconfig kdecoration kguiaddons kcoreaddons kconfigwidgets kwayland kwin pkgconf polkit polkit-qt5 xorg-server-devel xf86-input-libinput xf86-input-synaptics qt5-tools qt5-x11extras libqtxdg libdbusmenu-qt5 libxcb
 yay -S --needed qt5 qtutilities
 
+build_dir() {
+    echo "Building $1"
+    mkdir build
+    cd build
+}
+
+clone() {
+    FOLDER=$HOME/cutefish/$1
+    GIT_URL=git@github.com:cutefishos/$1.git
+
+    if [ ! -d $FOLDER ]; then
+        echo "Cloning $1 in $FOLDER"
+        git clone $GIT_URL $FOLDER
+        cd $FOLDER
+        build_dir $1
+    elif [[ -d $FOLDER && ! -d $FOLDER/.git ]]; then
+        echo "Removing $FOLDER"
+        rm -rf $FOLDER
+        echo "Cloning $1 in $FOLDER"
+        git clone $GIT_URL $FOLDER
+        cd $FOLDER
+        build_dir $1
+    else
+        cd $FOLDER
+    fi
+}
+
+cmakeClassic() {
+    cmake ..
+}
+
+cmakePath() {
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+}
+
+install() {
+    make
+    sudo make install
+}
+
 ###
 # Icons
 ###
-[ -d $HOME/cutefish/icons ] && rm -rf $HOME/cutefish/icons
-git clone git@github.com:cutefishos/icons.git $HOME/cutefish/icons
-cd $HOME/cutefish/icons
-mkdir build
-cd build
-cmake ..
-sudo make install
-
-###
-# Updator (Not working)
-###
-# [ -d $HOME/cutefish/updator ] && rm -rf $HOME/cutefish/updator
-# git clone git@github.com:cutefishos/updator.git $HOME/cutefish/updator
-# cd $HOME/cutefish/updator
-# mkdir build
-# cd build
-# cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-# make
-# sudo make install
+clone icons
+cmakeClassic
+install
 
 ###
 # Launcher
 ###
-[ -d $HOME/cutefish/launcher ] && rm -rf $HOME/cutefish/launcher
-git clone git@github.com:cutefishos/launcher.git $HOME/cutefish/launcher
-cd $HOME/cutefish/launcher
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone launcher
+cmakePath
+install
 
 ###
 # Statusbar
 ###
-[ -d $HOME/cutefish/statusbar ] && rm -rf $HOME/cutefish/statusbar
-git clone git@github.com:cutefishos/statusbar.git $HOME/cutefish/statusbar
-cd $HOME/cutefish/statusbar
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
-
-###
-# Daemon
-###
-[ -d $HOME/cutefish/daemon ] && rm -rf $HOME/cutefish/daemon
-git clone git@github.com:cutefishos/daemon.git $HOME/cutefish/daemon
-cd $HOME/cutefish/daemon
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone statusbar
+cmakePath
+install
 
 ###
 # Settings
 ###
-[ -d $HOME/cutefish/settings ] && rm -rf $HOME/cutefish/settings
-git clone git@github.com:cutefishos/settings.git $HOME/cutefish/settings
-cd $HOME/cutefish/settings
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone settings
+cmakePath
+install
 
 ###
 # FishUI
 ###
-[ -d $HOME/cutefish/fishui ] && rm -rf $HOME/cutefish/fishui
-git clone git@github.com:cutefishos/fishui.git $HOME/cutefish/fishui
-cd $HOME/cutefish/fishui
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone fishui
+cmakePath
+install
 
 ###
 # File Manager
-### 
-[ -d $HOME/cutefish/filemanager ] && rm -rf $HOME/cutefish/filemanager
-git clone git@github.com:cutefishos/filemanager.git $HOME/cutefish/filemanager
-cd $HOME/cutefish/filemanager
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+###
+clone filemanager
+cmakePath
+install
 
 ###
 # Screenshot
 ###
-[ -d $HOME/cutefish/screenshot ] && rm -rf $HOME/cutefish/screenshot
-git clone git@github.com:cutefishos/screenshot.git $HOME/cutefish/screenshot
-cd $HOME/cutefish/screenshot
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone screenshot
+cmakePath
+install
 
 ###
 # Kwin Plugins
 ###
-[ -d $HOME/cutefish/kwin-plugins ] && rm -rf $HOME/cutefish/kwin-plugins
-git clone git@github.com:cutefishos/kwin-plugins.git $HOME/cutefish/kwin-plugins
-cd $HOME/cutefish/kwin-plugins
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
+clone kwin-plugins
+cmakeClassic
+install
 
 ###
 # Dock
 ###
-[ -d $HOME/cutefish/dock ] && rm -rf $HOME/cutefish/dock
-git clone git@github.com:cutefishos/dock.git $HOME/cutefish/dock
-cd $HOME/cutefish/dock
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone dock
+cmakePath
+install
 
 ###
 # Core
 ###
-[ -d $HOME/cutefish/core ] && rm -rf $HOME/cutefish/core
-git clone git@github.com:cutefishos/core.git
-cd $HOME/cutefish/core
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone core.git
+cmakePath
+install
 
 ###
 # Terminal
 ###
-[ -d $HOME/cutefish/terminal ] && rm -rf $HOME/cutefish/terminal
-git clone git@github.com:cutefishos/terminal.git $HOME/cutefish/terminal
-cd $HOME/cutefish/terminal
-mkdir build
-cd build
-cmake ..
-make 
-sudo make install
+clone terminal
+cmakeClassic
+install
 
 ###
 # Screenlocker
 ###
-[ -d $HOME/cutefish/screenlocker ] && rm -rf $HOME/cutefish/screenlocker
-git clone git@github.com:cutefishos/screenlocker.git $HOME/cutefish/screenlocker
-cd $HOME/cutefish/screenlocker
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone screenlocker
+cmakePath
+install
 
 ###
 # SDDM
 ###
-[ -d $HOME/cutefish/sddm-theme ] && rm -rf $HOME/cutefish/sddm-theme
-git clone git@github.com:cutefishos/sddm-theme.git $HOME/cutefish/sddm-theme
-cd $HOME/cutefish/sddm-theme
-mkdir build
-cd build
-cmake .. 
-make
-sudo make install
+clone sddm-theme-theme
+cmakeClassic
+install
 
 ###
 # Text editor
 ###
-[ -d $HOME/cutefish/texteditor ] && rm -rf $HOME/cutefish/texteditor
-git clone git@github.com:cutefishos/texteditor.git $HOME/cutefish/texteditor
-cd $HOME/cutefish/texteditor
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone texteditor
+cmakePath
+install
 
 ###
 # AppMotor
 ###
-[ -d $HOME/cutefish/appmotor ] && rm -rf $HOME/cutefish/appmotor
-git clone git@github.com:cutefishos/appmotor.git $HOME/cutefish/appmotor
-cd $HOME/cutefish/appmotor
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone appmotor
+cmakePath
+install
 
 ###
 # Qt Plugins
 ###
-[ -d $HOME/cutefish/qt-plugins ] && rm -rf $HOME/cutefish/qt-plugins
-git clone git@github.com:cutefishos/qt-plugins.git $HOME/cutefish/qt-plugins
-cd $HOME/cutefish/qt-plugins
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
+clone qt-plugins
+cmakeClassic
+install
 
 ###
 # GTK Themes
 ###
-[ -d $HOME/cutefish/gtk-themes ] && rm -rf $HOME/cutefish/gtk-themes
-git clone git@github.com:cutefishos/gtk-themes.git $HOME/cutefish/gtk-themes
-cd $HOME/cutefish/gtk-themes
-mkdir build
-cd build 
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone gtk-themes
+cmakePath
+install
 
 ###
 # Libcutefish
 ###
-[ -d $HOME/cutefish/libcutefish ] && rm -rf $HOME/cutefish/libcutefish
-git clone git@github.com:cutefishos/libcutefish.git $HOME/cutefish/libcutefish
-cd $HOME/cutefish/libcutefish
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
+clone libcutefish
+cmakeClassic
+install
 
 ###
 # Cursor Themes
 ###
-[ -d $HOME/cutefish/cursor-themes ] && rm -rf $HOME/cutefish/cursor-themes
-git clone git@github.com:cutefishos/cursor-themes.git $HOME/cutefish/cursor-themes
+clone cursor-themes
 
 ###
 # Calculator
 ###
-[ -d $HOME/cutefish/calculator ] && rm -rf $HOME/cutefish/calculator
-git clone git@github.com:cutefishos/calculator.git $HOME/cutefish/calculator
-cd $HOME/cutefish/calculator
-mkdir build
-cd build
-cmake .. 
-make
-sudo make install
+clone calculator
+cmakeClassic
+install
 
 ###
 # Video Player
 ###
-[ -d $HOME/cutefish/videoplayer ] && rm -rf $HOME/cutefish/videoplayer
-git clone git@github.com:cutefishos/videoplayer.git $HOME/cutefish/videoplayer
-cd $HOME/cutefish/videoplayer
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
-make
-sudo make install
+clone videoplayer
+cmakePath
+install
 
 ###
 # Plymouth theme
 ###
-[ -d $HOME/cutefish/plymouth-theme ] && rm -rf $HOME/cutefish/plymouth-theme
-git clone git@github.com:cutefishos/plymouth-theme.git $HOME/cutefish/plymouth-theme
+clone plymouth-theme
 
 ###
 # Wallpapers
 ###
-[ -d $HOME/cutefish/wallpapers ] && rm -rf $HOME/cutefish/wallpapers
-git clone git@github.com:cutefishos/wallpapers.git $HOME/cutefish/wallpapers
+clone wallpapers
